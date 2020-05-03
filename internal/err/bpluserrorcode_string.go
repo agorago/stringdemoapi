@@ -10,11 +10,12 @@ func _() {
 	var x [1]struct{}
 	_ = x[CannotInvokeOperation-200000]
 	_ = x[CannotCastResponse-200001]
+	_ = x[UnexpectedProxyInputParameter-200002]
 }
 
-const _BPlusErrorCode_name = "stringdemo.errors.CannotInvokeOperationstringdemo.errors.CannotCastResponse"
+const _BPlusErrorCode_name = "stringdemoapi.errors.CannotInvokeOperationstringdemoapi.errors.CannotCastResponsestringdemoapi.errors.UnexpectedProxyInputParameter"
 
-var _BPlusErrorCode_index = [...]uint8{0, 39, 75}
+var _BPlusErrorCode_index = [...]uint8{0, 42, 81, 131}
 
 func (i BPlusErrorCode) String() string {
 	i -= 200000

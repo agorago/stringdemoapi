@@ -2,33 +2,33 @@ package register
 
 import (
 	"context"
-	api "gitlab.intelligentb.com/examples/stringdemo/stringdemoapi/api"
-	_ "gitlab.intelligentb.com/devops/bplus" // initialize BPlus first to make sure
-	"gitlab.intelligentb.com/examples/stringdemo/stringdemoapi/proxy"
+	_ "github.com/agorago/wego" // initialize Wego first to make sure
+	api "github.com/agorago/stringdemoapi/api"
+	"github.com/agorago/stringdemoapi/proxy"
 
-	// that all BPLUS modules are loaded
-	bplus "gitlab.intelligentb.com/devops/bplus/fw"
+	// that all WEGO modules are loaded
+	fw "github.com/agorago/wego/fw"
 	"reflect"
 )
 
 func init() {
 	var sd = GetServiceDescriptor()
 
-	bplus.RegisterService("stringdemo", sd)
+	fw.RegisterService("stringdemo", sd)
 }
 
-func GetServiceDescriptor() bplus.ServiceDescriptor {
-	return bplus.ServiceDescriptor{
-		Name:            "stringdemo",
-		Description:     " StringDemoService - the interface that is going to be implemented by the string demo service This has methods to illustrate features of the BPlus framework",
-		Operations:      OperationDescriptors(),
+func GetServiceDescriptor() fw.ServiceDescriptor {
+	return fw.ServiceDescriptor{
+		Name:        "stringdemo",
+		Description: " StringDemoService - the interface that is going to be implemented by the string demo service This has methods to illustrate features of the BPlus framework",
+		Operations:  OperationDescriptors(),
 	}
 }
 
-func OperationDescriptors() []bplus.OperationDescriptor {
-	return []bplus.OperationDescriptor{
+func OperationDescriptors() []fw.OperationDescriptor {
+	return []fw.OperationDescriptor{
 
-		bplus.OperationDescriptor{
+		fw.OperationDescriptor{
 			Name:                "Uppercase",
 			Description:         " Uppercase - Converts the input string into upper case",
 			URL:                 "/uppercase",
@@ -40,7 +40,7 @@ func OperationDescriptors() []bplus.OperationDescriptor {
 			Params:              UppercasePD(),
 		},
 
-		bplus.OperationDescriptor{
+		fw.OperationDescriptor{
 			Name:                "Count",
 			Description:         " Count - returns the length of the input string",
 			URL:                 "/count",
@@ -49,11 +49,11 @@ func OperationDescriptors() []bplus.OperationDescriptor {
 			ResponseDescription: " CountResponse - the  Count service response",
 			OpRequestMaker:      makeCountRequest,
 			OpResponseMaker:     makeCountResponse,
-			ProxyMiddleware:     []bplus.Middleware{proxy.InterceptCount,},
+			ProxyMiddleware:     []fw.Middleware{proxy.InterceptCount},
 			Params:              CountPD(),
 		},
 
-		bplus.OperationDescriptor{
+		fw.OperationDescriptor{
 			Name:                "AddNumbers",
 			Description:         " AddNumbers - adds two numbers and returns the result This method illustrates a GET method implementation in BPlus since there is no request payload required",
 			URL:                 "/add-numbers",
@@ -65,7 +65,7 @@ func OperationDescriptors() []bplus.OperationDescriptor {
 			Params:          AddNumbersPD(),
 		},
 
-		bplus.OperationDescriptor{
+		fw.OperationDescriptor{
 			Name:                "AddNumbers",
 			Description:         " AddNumbers - adds two numbers and returns the result This method illustrates a GET method implementation in BPlus since there is no request payload required",
 			URL:                 "/add-numbers-path/{Arg1}/{Arg2}",
@@ -79,63 +79,63 @@ func OperationDescriptors() []bplus.OperationDescriptor {
 	}
 }
 
-func UppercasePD() []bplus.ParamDescriptor {
+func UppercasePD() []fw.ParamDescriptor {
 
-	return []bplus.ParamDescriptor{
+	return []fw.ParamDescriptor{
 
-		bplus.ParamDescriptor{
+		fw.ParamDescriptor{
 			Name:        "ctx",
 			Description: "",
-			ParamOrigin: bplus.CONTEXT,
+			ParamOrigin: fw.CONTEXT,
 		},
 
-		bplus.ParamDescriptor{
+		fw.ParamDescriptor{
 			Name:        "ucr",
 			Description: "",
-			ParamOrigin: bplus.PAYLOAD,
+			ParamOrigin: fw.PAYLOAD,
 		},
 	}
 }
 
-func CountPD() []bplus.ParamDescriptor {
+func CountPD() []fw.ParamDescriptor {
 
-	return []bplus.ParamDescriptor{
+	return []fw.ParamDescriptor{
 
-		bplus.ParamDescriptor{
+		fw.ParamDescriptor{
 			Name:        "ctx",
 			Description: "",
-			ParamOrigin: bplus.CONTEXT,
+			ParamOrigin: fw.CONTEXT,
 		},
 
-		bplus.ParamDescriptor{
+		fw.ParamDescriptor{
 			Name:        "cr",
 			Description: "",
-			ParamOrigin: bplus.PAYLOAD,
+			ParamOrigin: fw.PAYLOAD,
 		},
 	}
 }
 
-func AddNumbersPD() []bplus.ParamDescriptor {
+func AddNumbersPD() []fw.ParamDescriptor {
 
-	return []bplus.ParamDescriptor{
+	return []fw.ParamDescriptor{
 
-		bplus.ParamDescriptor{
+		fw.ParamDescriptor{
 			Name:        "ctx",
 			Description: "",
-			ParamOrigin: bplus.CONTEXT,
+			ParamOrigin: fw.CONTEXT,
 		},
 
-		bplus.ParamDescriptor{
+		fw.ParamDescriptor{
 			Name:        "Arg1",
 			Description: "",
-			ParamOrigin: bplus.HEADER,
+			ParamOrigin: fw.HEADER,
 			ParamKind:   reflect.Int,
 		},
 
-		bplus.ParamDescriptor{
+		fw.ParamDescriptor{
 			Name:        "Arg2",
 			Description: "",
-			ParamOrigin: bplus.HEADER,
+			ParamOrigin: fw.HEADER,
 			ParamKind:   reflect.Int,
 		},
 	}

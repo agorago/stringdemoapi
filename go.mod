@@ -1,7 +1,7 @@
-module gitlab.intelligentb.com/examples/stringdemo/stringdemoapi
+module github.com/agorago/stringdemoapi
 
 go 1.13
 
-replace gitlab.intelligentb.com/devops/bplus => ../bplus
+replace github.com/agorago/wego => ../wego
 
-require gitlab.intelligentb.com/devops/bplus v0.0.0-00010101000000-000000000000
+require github.com/agorago/wego v0.0.0-00010101000000-000000000000
