@@ -2,17 +2,23 @@ package proxy
 
 import (
 	"context"
-
-	bplus "github.com/agorago/wego/http"
 	api "github.com/agorago/stringdemoapi/api"
 	e "github.com/agorago/stringdemoapi/internal/err"
+	wegohttp "github.com/agorago/wego/http"
 )
 
-type Stringdemo struct{}
+type stringdemoProxy struct{
+	WegoProxy wegohttp.ProxyService
+}
 
+func MakeStringdemoProxy(wegoproxy wegohttp.ProxyService) api.StringDemoService{
+	return stringdemoProxy{
+		WegoProxy: wegoproxy,
+	}
+}
 // Uppercase - proxies the Uppercase and calls the server using HTTP
-func (Stringdemo) Uppercase(ctx context.Context, ucr *api.UpperCaseRequest) (api.UpperCaseResponse, error) {
-	resp, err := bplus.ProxyRequest(ctx, "stringdemo", "Uppercase", ucr)
+func (proxy stringdemoProxy) Uppercase(ctx context.Context, ucr *api.UpperCaseRequest) (api.UpperCaseResponse, error) {
+	resp, err := proxy.WegoProxy.ProxyRequest(ctx, "stringdemo", "Uppercase", ucr)
 	if err != nil {
 		return api.UpperCaseResponse{}, err
 	}
@@ -27,8 +33,8 @@ func (Stringdemo) Uppercase(ctx context.Context, ucr *api.UpperCaseRequest) (api
 }
 
 // Count - proxies the Count and calls the server using HTTP
-func (Stringdemo) Count(ctx context.Context, cr *api.CountRequest) (api.CountResponse, error) {
-	resp, err := bplus.ProxyRequest(ctx, "stringdemo", "Count", cr)
+func (proxy stringdemoProxy) Count(ctx context.Context, cr *api.CountRequest) (api.CountResponse, error) {
+	resp, err :=proxy.WegoProxy.ProxyRequest(ctx, "stringdemo", "Count", cr)
 	if err != nil {
 		return api.CountResponse{}, err
 	}
@@ -43,8 +49,8 @@ func (Stringdemo) Count(ctx context.Context, cr *api.CountRequest) (api.CountRes
 }
 
 // AddNumbers - proxies the AddNumbers and calls the server using HTTP
-func (Stringdemo) AddNumbers(ctx context.Context, arg1 int, arg2 int) (api.AddNumbersResponse, error) {
-	resp, err := bplus.ProxyRequest(ctx, "stringdemo", "AddNumbers", arg1, arg2)
+func (proxy stringdemoProxy) AddNumbers(ctx context.Context, arg1 int, arg2 int) (api.AddNumbersResponse, error) {
+	resp, err := proxy.WegoProxy.ProxyRequest(ctx, "stringdemo", "AddNumbers", arg1, arg2)
 	if err != nil {
 		return api.AddNumbersResponse{}, err
 	}

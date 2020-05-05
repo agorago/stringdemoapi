@@ -11,10 +11,12 @@ import (
 	"reflect"
 )
 
-func init() {
-	var sd = GetServiceDescriptor()
+type StringDemoRegistration interface{
+	Register(sd fw.ServiceDescriptor)
+}
 
-	fw.RegisterService("stringdemo", sd)
+type stringDemoRegistration struct{
+	Wego fw.RegistrationService
 }
 
 func GetServiceDescriptor() fw.ServiceDescriptor {
@@ -23,6 +25,10 @@ func GetServiceDescriptor() fw.ServiceDescriptor {
 		Description: " StringDemoService - the interface that is going to be implemented by the string demo service This has methods to illustrate features of the BPlus framework",
 		Operations:  OperationDescriptors(),
 	}
+}
+
+func (sdr stringDemoRegistration)Register(sd fw.ServiceDescriptor){
+	sdr.Wego.RegisterService("stringdemo",sd)
 }
 
 func OperationDescriptors() []fw.OperationDescriptor {

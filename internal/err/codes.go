@@ -2,37 +2,37 @@ package err
 
 import (
 	"context"
-	bpluse "github.com/agorago/wego/err"
+	wegoe "github.com/agorago/wego/err"
 	"net/http"
 )
 
 // It is recommended that each module define its own error file
 
-func internalMakeBplusError(ctx context.Context, ll bpluse.LogLevel, e BPlusErrorCode, httpErrorCode int, args map[string]interface{}) bpluse.BPlusError {
-	return bpluse.MakeErrWithHTTPCode(ctx, ll, int(e), e.String(), httpErrorCode, args)
+func internalMakeBplusError(ctx context.Context, ll wegoe.LogLevel, e BPlusErrorCode, httpErrorCode int, args map[string]interface{}) wegoe.BPlusError {
+	return wegoe.MakeErrWithHTTPCode(ctx, ll, int(e), e.String(), httpErrorCode, args)
 }
 
 // MakeBplusError - returns a customized CAFUError for BPlus
-func MakeBplusError(ctx context.Context, e BPlusErrorCode, args map[string]interface{}) bpluse.BPlusError {
-	return internalMakeBplusError(ctx, bpluse.Error, e, http.StatusInternalServerError, args)
+func MakeBplusError(ctx context.Context, e BPlusErrorCode, args map[string]interface{}) wegoe.BPlusError {
+	return internalMakeBplusError(ctx, wegoe.Error, e, http.StatusInternalServerError, args)
 
 }
 
 // MakeBplusWarning - returns a customized CAFUError for BPlus
-func MakeBplusWarning(ctx context.Context, e BPlusErrorCode, args map[string]interface{}) bpluse.BPlusError {
-	return internalMakeBplusError(ctx, bpluse.Warning, e, http.StatusInternalServerError, args)
+func MakeBplusWarning(ctx context.Context, e BPlusErrorCode, args map[string]interface{}) wegoe.BPlusError {
+	return internalMakeBplusError(ctx, wegoe.Warning, e, http.StatusInternalServerError, args)
 
 }
 
 // MakeBplusErrorWithErrorCode - returns a customized CAFUError for BPlus
-func MakeBplusErrorWithErrorCode(ctx context.Context, httpErrorCode int, e BPlusErrorCode, args map[string]interface{}) bpluse.BPlusError {
-	return internalMakeBplusError(ctx, bpluse.Error, e, httpErrorCode, args)
+func MakeBplusErrorWithErrorCode(ctx context.Context, httpErrorCode int, e BPlusErrorCode, args map[string]interface{}) wegoe.BPlusError {
+	return internalMakeBplusError(ctx, wegoe.Error, e, httpErrorCode, args)
 
 }
 
 // MakeBplusWarningWithErrorCode - returns a customized CAFUError for BPlus
-func MakeBplusWarningWithErrorCode(ctx context.Context, httpErrorCode int, e BPlusErrorCode, args map[string]interface{}) bpluse.BPlusError {
-	return internalMakeBplusError(ctx, bpluse.Warning, e, httpErrorCode, args)
+func MakeBplusWarningWithErrorCode(ctx context.Context, httpErrorCode int, e BPlusErrorCode, args map[string]interface{}) wegoe.BPlusError {
+	return internalMakeBplusError(ctx, wegoe.Warning, e, httpErrorCode, args)
 
 }
 
