@@ -12,6 +12,7 @@ type stringdemoProxy struct{
 }
 
 func MakeStringdemoProxy(wegoproxy wegohttp.ProxyService) api.StringDemoService{
+	// make sure that the proxy info is first initialized
 	return stringdemoProxy{
 		WegoProxy: wegoproxy,
 	}

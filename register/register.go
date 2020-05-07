@@ -11,30 +11,18 @@ import (
 	"reflect"
 )
 
-type StringDemoRegistration interface{
-	Register(sd fw.ServiceDescriptor)
-}
-
-type stringDemoRegistration struct{
-	Wego fw.RegistrationService
-}
-
 func GetServiceDescriptor() fw.ServiceDescriptor {
 	return fw.ServiceDescriptor{
 		Name:        "stringdemo",
 		Description: " StringDemoService - the interface that is going to be implemented by the string demo service This has methods to illustrate features of the BPlus framework",
-		Operations:  OperationDescriptors(),
+		Operations:  operationDescriptors(),
 	}
 }
 
-func (sdr stringDemoRegistration)Register(sd fw.ServiceDescriptor){
-	sdr.Wego.RegisterService("stringdemo",sd)
-}
-
-func OperationDescriptors() []fw.OperationDescriptor {
+func operationDescriptors() []fw.OperationDescriptor {
 	return []fw.OperationDescriptor{
 
-		fw.OperationDescriptor{
+		{
 			Name:                "Uppercase",
 			Description:         " Uppercase - Converts the input string into upper case",
 			URL:                 "/uppercase",
@@ -43,10 +31,10 @@ func OperationDescriptors() []fw.OperationDescriptor {
 			ResponseDescription: " UpperCaseResponse - the  Uppercase service response",
 			OpRequestMaker:      makeUppercaseRequest,
 			OpResponseMaker:     makeUppercaseResponse,
-			Params:              UppercasePD(),
+			Params:              uppercasePD(),
 		},
 
-		fw.OperationDescriptor{
+		{
 			Name:                "Count",
 			Description:         " Count - returns the length of the input string",
 			URL:                 "/count",
@@ -56,10 +44,10 @@ func OperationDescriptors() []fw.OperationDescriptor {
 			OpRequestMaker:      makeCountRequest,
 			OpResponseMaker:     makeCountResponse,
 			ProxyMiddleware:     []fw.Middleware{proxy.InterceptCount},
-			Params:              CountPD(),
+			Params:              countPD(),
 		},
 
-		fw.OperationDescriptor{
+		{
 			Name:                "AddNumbers",
 			Description:         " AddNumbers - adds two numbers and returns the result This method illustrates a GET method implementation in BPlus since there is no request payload required",
 			URL:                 "/add-numbers",
@@ -68,10 +56,10 @@ func OperationDescriptors() []fw.OperationDescriptor {
 			ResponseDescription: " AddNumbersResponse - the  AddNumbers service response",
 
 			OpResponseMaker: makeAddNumbersResponse,
-			Params:          AddNumbersPD(),
+			Params:          addNumbersPD(),
 		},
 
-		fw.OperationDescriptor{
+		{
 			Name:                "AddNumbers",
 			Description:         " AddNumbers - adds two numbers and returns the result This method illustrates a GET method implementation in BPlus since there is no request payload required",
 			URL:                 "/add-numbers-path/{Arg1}/{Arg2}",
@@ -80,22 +68,22 @@ func OperationDescriptors() []fw.OperationDescriptor {
 			ResponseDescription: " AddNumbersResponse - the  AddNumbers service response",
 
 			OpResponseMaker: makeAddNumbersResponse,
-			Params:          AddNumbersPD(),
+			Params:          addNumbersPD(),
 		},
 	}
 }
 
-func UppercasePD() []fw.ParamDescriptor {
+func uppercasePD() []fw.ParamDescriptor {
 
 	return []fw.ParamDescriptor{
 
-		fw.ParamDescriptor{
+		{
 			Name:        "ctx",
 			Description: "",
 			ParamOrigin: fw.CONTEXT,
 		},
 
-		fw.ParamDescriptor{
+		{
 			Name:        "ucr",
 			Description: "",
 			ParamOrigin: fw.PAYLOAD,
@@ -103,17 +91,17 @@ func UppercasePD() []fw.ParamDescriptor {
 	}
 }
 
-func CountPD() []fw.ParamDescriptor {
+func countPD() []fw.ParamDescriptor {
 
 	return []fw.ParamDescriptor{
 
-		fw.ParamDescriptor{
+		{
 			Name:        "ctx",
 			Description: "",
 			ParamOrigin: fw.CONTEXT,
 		},
 
-		fw.ParamDescriptor{
+		{
 			Name:        "cr",
 			Description: "",
 			ParamOrigin: fw.PAYLOAD,
@@ -121,24 +109,24 @@ func CountPD() []fw.ParamDescriptor {
 	}
 }
 
-func AddNumbersPD() []fw.ParamDescriptor {
+func addNumbersPD() []fw.ParamDescriptor {
 
 	return []fw.ParamDescriptor{
 
-		fw.ParamDescriptor{
+		{
 			Name:        "ctx",
 			Description: "",
 			ParamOrigin: fw.CONTEXT,
 		},
 
-		fw.ParamDescriptor{
+		{
 			Name:        "Arg1",
 			Description: "",
 			ParamOrigin: fw.HEADER,
 			ParamKind:   reflect.Int,
 		},
 
-		fw.ParamDescriptor{
+		{
 			Name:        "Arg2",
 			Description: "",
 			ParamOrigin: fw.HEADER,
@@ -147,21 +135,21 @@ func AddNumbersPD() []fw.ParamDescriptor {
 	}
 }
 
-func makeUppercaseRequest(ctx context.Context) (interface{}, error) {
+func makeUppercaseRequest(context.Context) (interface{}, error) {
 	return &api.UpperCaseRequest{}, nil
 }
 
-func makeUppercaseResponse(ctx context.Context) (interface{}, error) {
+func makeUppercaseResponse(context.Context) (interface{}, error) {
 	return &api.UpperCaseResponse{}, nil
 }
-func makeCountRequest(ctx context.Context) (interface{}, error) {
+func makeCountRequest(context.Context) (interface{}, error) {
 	return &api.CountRequest{}, nil
 }
 
-func makeCountResponse(ctx context.Context) (interface{}, error) {
+func makeCountResponse(context.Context) (interface{}, error) {
 	return &api.CountResponse{}, nil
 }
 
-func makeAddNumbersResponse(ctx context.Context) (interface{}, error) {
+func makeAddNumbersResponse(context.Context) (interface{}, error) {
 	return &api.AddNumbersResponse{}, nil
 }
