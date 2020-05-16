@@ -18,17 +18,17 @@ func MakeStringdemoProxy(wegoproxy wegohttp.ProxyService) api.StringDemoService{
 	}
 }
 // Uppercase - proxies the Uppercase and calls the server using HTTP
-func (proxy stringdemoProxy) Uppercase(ctx context.Context, ucr *api.UpperCaseRequest) (api.UpperCaseResponse, error) {
+func (proxy stringdemoProxy) Uppercase(ctx context.Context, ucr *api.UppercaseRequest) (api.UppercaseResponse, error) {
 	resp, err := proxy.WegoProxy.ProxyRequest(ctx, "stringdemo", "Uppercase", ucr)
 	if err != nil {
-		return api.UpperCaseResponse{}, err
+		return api.UppercaseResponse{}, err
 	}
-	r, ok := resp.(*api.UpperCaseResponse)
+	r, ok := resp.(*api.UppercaseResponse)
 	if ok {
 		return *r, nil
 	}
 
-	return api.UpperCaseResponse{}, e.MakeBplusError(ctx, e.CannotCastResponse, map[string]interface{}{
+	return api.UppercaseResponse{}, e.Error(ctx, e.CannotCastResponse, map[string]interface{}{
 		"Response": resp})
 
 }
@@ -44,7 +44,7 @@ func (proxy stringdemoProxy) Count(ctx context.Context, cr *api.CountRequest) (a
 		return *r, nil
 	}
 
-	return api.CountResponse{}, e.MakeBplusError(ctx, e.CannotCastResponse, map[string]interface{}{
+	return api.CountResponse{}, e.Error(ctx, e.CannotCastResponse, map[string]interface{}{
 		"Response": resp})
 
 }
@@ -60,7 +60,7 @@ func (proxy stringdemoProxy) AddNumbers(ctx context.Context, arg1 int, arg2 int)
 		return *r, nil
 	}
 
-	return api.AddNumbersResponse{}, e.MakeBplusError(ctx, e.CannotCastResponse, map[string]interface{}{
+	return api.AddNumbersResponse{}, e.Error(ctx, e.CannotCastResponse, map[string]interface{}{
 		"Response": resp})
 
 }

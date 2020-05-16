@@ -13,7 +13,7 @@ func InterceptCount(ctx context.Context, chain *fw.MiddlewareChain) context.Cont
 	// Intercept at the proxy side when the argument is "Count".  Return 8 instead of 5 for count
 	cr, ok := wegocontext.GetPayload(ctx).(*api.CountRequest)
 	if !ok {
-		ctx = wegocontext.SetError(ctx, e.MakeBplusError(ctx, e.UnexpectedProxyInputParameter, nil))
+		ctx = wegocontext.SetError(ctx, e.Error(ctx, e.UnexpectedProxyInputParameter, nil))
 		return ctx
 	}
 	if cr.S == "Count" {

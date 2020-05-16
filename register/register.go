@@ -14,7 +14,7 @@ import (
 func GetServiceDescriptor() fw.ServiceDescriptor {
 	return fw.ServiceDescriptor{
 		Name:        "stringdemo",
-		Description: " StringDemoService - the interface that is going to be implemented by the string demo service This has methods to illustrate features of the BPlus framework",
+		Description: " StringDemoService - the interface that is going to be implemented by the string demo service This has methods to illustrate features of the Wego framework",
 		Operations:  operationDescriptors(),
 	}
 }
@@ -27,8 +27,8 @@ func operationDescriptors() []fw.OperationDescriptor {
 			Description:         " Uppercase - Converts the input string into upper case",
 			URL:                 "/uppercase",
 			HTTPMethod:          "POST",
-			RequestDescription:  " UpperCaseRequest - the payload for Uppercase service",
-			ResponseDescription: " UpperCaseResponse - the  Uppercase service response",
+			RequestDescription:  " UppercaseRequest - the payload for Uppercase service",
+			ResponseDescription: " UppercaseResponse - the  Uppercase service response",
 			OpRequestMaker:      makeUppercaseRequest,
 			OpResponseMaker:     makeUppercaseResponse,
 			Params:              uppercasePD(),
@@ -49,7 +49,7 @@ func operationDescriptors() []fw.OperationDescriptor {
 
 		{
 			Name:                "AddNumbers",
-			Description:         " AddNumbers - adds two numbers and returns the result This method illustrates a GET method implementation in BPlus since there is no request payload required",
+			Description:         " AddNumbers - adds two numbers and returns the result This method illustrates a GET method implementation in WeGO since there is no request payload required",
 			URL:                 "/add-numbers",
 			HTTPMethod:          "GET",
 			RequestDescription:  "",
@@ -61,7 +61,7 @@ func operationDescriptors() []fw.OperationDescriptor {
 
 		{
 			Name:                "AddNumbers",
-			Description:         " AddNumbers - adds two numbers and returns the result This method illustrates a GET method implementation in BPlus since there is no request payload required",
+			Description:         " AddNumbers - adds two numbers and returns the result This method illustrates a GET method implementation in WeGO since there is no request payload required",
 			URL:                 "/add-numbers-path/{Arg1}/{Arg2}",
 			HTTPMethod:          "GET",
 			RequestDescription:  "",
@@ -136,11 +136,11 @@ func addNumbersPD() []fw.ParamDescriptor {
 }
 
 func makeUppercaseRequest(context.Context) (interface{}, error) {
-	return &api.UpperCaseRequest{}, nil
+	return &api.UppercaseRequest{}, nil
 }
 
 func makeUppercaseResponse(context.Context) (interface{}, error) {
-	return &api.UpperCaseResponse{}, nil
+	return &api.UppercaseResponse{}, nil
 }
 func makeCountRequest(context.Context) (interface{}, error) {
 	return &api.CountRequest{}, nil

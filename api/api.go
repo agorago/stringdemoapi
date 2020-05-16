@@ -2,13 +2,13 @@ package api
 
 import "context"
 
-// UpperCaseRequest - the payload for Uppercase service
-type UpperCaseRequest struct {
+// UppercaseRequest - the payload for Uppercase service
+type UppercaseRequest struct {
 	S string `json:"s"`
 }
 
-// UpperCaseResponse - the  Uppercase service response
-type UpperCaseResponse struct {
+// UppercaseResponse - the  Uppercase service response
+type UppercaseResponse struct {
 	V string `json:"v"`
 }
 
@@ -28,18 +28,18 @@ type AddNumbersResponse struct {
 }
 
 // StringDemoService - the interface that is going to be implemented by the string demo service
-// This has methods to illustrate features of the BPlus framework
+// This has methods to illustrate features of the WeGO framework
 type StringDemoService interface {
 	// Uppercase - Converts the input string into upper case
 	Uppercase( // the context
 		ctx context.Context,
 		// The upper case request
-		ucr *UpperCaseRequest) (
+		ucr *UppercaseRequest) (
 		// the upper case response
-		UpperCaseResponse, error)
+		UppercaseResponse, error)
 	// Count - returns the length of the input string
 	Count(ctx context.Context, cr *CountRequest) (CountResponse, error)
 	// AddNumbers - adds two numbers and returns the result
-	// This method illustrates a GET method implementation in BPlus since there is no request payload required
+	// This method illustrates a GET method implementation in WeGO since there is no request payload required
 	AddNumbers(ctx context.Context, arg1 int, arg2 int) (AddNumbersResponse, error)
 }
