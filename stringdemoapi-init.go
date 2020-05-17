@@ -28,7 +28,9 @@ func (stringDemoApiInitializer)Initialize(commandCatalog fw.CommandCatalog)(fw.C
 	if err != nil {
 		return commandCatalog,nil
 	}
-	wegoService.RegisterService("stringdemo",register.GetServiceDescriptor())
+	proxyMiddlewares := GetProxyMiddlewares()
+	register.RegisterService(wegoService,proxyMiddlewares)
+
 	// create a proxy
 	proxyService,err := wego.GetProxyService(commandCatalog)
 	stringdemoProxy := proxy.MakeStringdemoProxy(proxyService)
@@ -38,4 +40,8 @@ func (stringDemoApiInitializer)Initialize(commandCatalog fw.CommandCatalog)(fw.C
 
 func GetStringDemoProxy(commandCatalog fw.CommandCatalog)(api.StringDemoService,error){
 	return commandCatalog.Command(StringDemoProxy).(api.StringDemoService),nil
+}
+
+func GetProxyMiddlewares()[]fw.Middleware{
+	return []fw.Middleware{proxy.MakeCountInterceptor()}
 }

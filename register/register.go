@@ -2,24 +2,26 @@ package register
 
 import (
 	"context"
-	_ "github.com/agorago/wego" // initialize Wego first to make sure
 	api "github.com/agorago/stringdemoapi/api"
-	"github.com/agorago/stringdemoapi/proxy"
+	_ "github.com/agorago/wego" // initialize Wego first to make sure
 
 	// that all WEGO modules are loaded
 	fw "github.com/agorago/wego/fw"
 	"reflect"
 )
 
-func GetServiceDescriptor() fw.ServiceDescriptor {
+func RegisterService(wegoService fw.RegistrationService,proxyMiddlewares []fw.Middleware){
+	wegoService.RegisterService("stringdemo",GetServiceDescriptor(proxyMiddlewares))
+}
+func GetServiceDescriptor(proxyMiddlewares []fw.Middleware) fw.ServiceDescriptor {
 	return fw.ServiceDescriptor{
 		Name:        "stringdemo",
 		Description: " StringDemoService - the interface that is going to be implemented by the string demo service This has methods to illustrate features of the Wego framework",
-		Operations:  operationDescriptors(),
+		Operations:  operationDescriptors(proxyMiddlewares),
 	}
 }
 
-func operationDescriptors() []fw.OperationDescriptor {
+func operationDescriptors(proxyMiddlewares []fw.Middleware) []fw.OperationDescriptor {
 	return []fw.OperationDescriptor{
 
 		{
@@ -43,7 +45,7 @@ func operationDescriptors() []fw.OperationDescriptor {
 			ResponseDescription: " CountResponse - the  Count service response",
 			OpRequestMaker:      makeCountRequest,
 			OpResponseMaker:     makeCountResponse,
-			ProxyMiddleware:     []fw.Middleware{proxy.InterceptCount},
+			ProxyMiddleware:     proxyMiddlewares,
 			Params:              countPD(),
 		},
 
