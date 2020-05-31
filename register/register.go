@@ -3,8 +3,7 @@ package register
 import (
 	"context"
 	api "github.com/agorago/stringdemoapi/api"
-	_ "github.com/agorago/wego" // initialize Wego first to make sure
-
+	
 	// that all WEGO modules are loaded
 	fw "github.com/agorago/wego/fw"
 	"reflect"
